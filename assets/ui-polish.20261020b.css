@@ -66,6 +66,13 @@
   }
 }
 
+/* 高屏：按视口高度均匀铺满排名栏，避免 24 行挤在顶部 */
+@media (min-height: 851px) {
+  .network .province-row {
+    min-height: clamp(36px, calc(9vh - 42px), 64px);
+  }
+}
+
 @media (max-height: 760px) {
   .network .province-row {
     min-height: 28px;
