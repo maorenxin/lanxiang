@@ -363,3 +363,22 @@
     min-height: 720px !important;
   }
 }
+
+/* 720p 仍保留 02 页卡片说明：用紧凑行高容纳中英两行，而不是隐藏 */
+@media (min-width: 1001px) and (max-height: 760px) {
+  .scene-progress-layer .products .subitem-card > small {
+    display: block;
+    flex: 0 0 auto;
+    overflow: hidden;
+    margin-top: 2px;
+    padding-top: 2px;
+    font-size: 9px;
+    line-height: 1;
+  }
+
+  .scene-progress-layer .products .subitem-card > small x-en {
+    margin-top: 1px;
+    font-size: 7.8px;
+    line-height: 1.05;
+  }
+}
