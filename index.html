@@ -5,6 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#08284F" />
     <title>蓝象智联｜数字驾驶舱 V2</title>
+    <script>
+      (function () {
+        try {
+          var q = new URLSearchParams(location.search).get("lang");
+          var m = q;
+          if (!/^(both|zh|en)$/.test(m || "")) m = localStorage.getItem("lanxiang-lang");
+          if (!/^(both|zh|en)$/.test(m || "")) m = "both";
+          document.documentElement.setAttribute("data-lang", m);
+        } catch (e) {
+          document.documentElement.setAttribute("data-lang", "both");
+        }
+      })();
+    </script>
     <script defer src="./assets/app.js"></script>
   </head>
   <body><div id="app"></div></body>
