@@ -1,0 +1,384 @@
+/* 蓝象智联驾驶舱 — 2026-10-20 UI polish
+   - 01 Industry leadership: compact authority/fronts panels on short screens
+   - 02 Strategy & model: keep bilingual card descriptions visible at 768p
+   - 03 National network: show all 24 regions in a compact two-column ranking
+   - 04 Data resources: fit all 10 categories on shorter screens
+   - 06 Customer ecosystem: constrain the logo wall to the scene and make
+     its vertical scrolling explicit (fade + SCROLL hint + snap)
+   - Short viewports: compact 720p layout; below 720px height, scroll rather
+     than hard-clip content */
+
+/* 03 全国节点规模：24 个区域全部展开，不再截断 */
+.network .province-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 6px;
+  overflow: visible;
+}
+
+.network .province-row {
+  grid-template-columns: 18px minmax(0, 1fr) 24px;
+  min-height: 36px;
+  padding: 0 5px;
+  gap: 4px;
+}
+
+.network .province-row > i {
+  display: none;
+}
+
+.network .province-row b {
+  font-size: 11px;
+  line-height: 1.15;
+}
+
+.network .province-row b x-en {
+  font-size: 9px;
+  line-height: 1.1;
+}
+
+.network .province-row strong {
+  font-size: 11px;
+}
+
+/* 短屏：两列排名进一步压缩，保证 24 个区域全部可见 */
+@media (max-height: 850px) {
+  .network .province-row {
+    min-height: 30px;
+  }
+}
+
+/* 04 数据资源：在 768/720 高度屏幕上完整显示 10 类 */
+@media (max-height: 850px) {
+  .sources-board .source-detail {
+    padding: 14px;
+  }
+
+  .sources-board .source-detail > header {
+    height: 50px;
+    min-height: 50px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .sources-board .source-detail-note {
+    margin-bottom: 8px;
+  }
+
+  .sources-board .source-detail-list article {
+    min-height: 37px;
+  }
+}
+
+/* 高屏：按视口高度均匀铺满排名栏，避免 24 行挤在顶部 */
+@media (min-height: 851px) {
+  .network .province-row {
+    min-height: clamp(36px, calc(9vh - 42px), 64px);
+  }
+}
+
+@media (max-height: 760px) {
+  .network .province-row {
+    min-height: 28px;
+  }
+
+  .network .province-row b {
+    font-size: 10px;
+  }
+
+  .network .province-row b x-en {
+    font-size: 8px;
+  }
+
+  .network .province-row strong {
+    font-size: 10px;
+  }
+
+  .sources-board .source-detail-list article {
+    min-height: 35px;
+  }
+}
+
+/* 06 客户生态：把产业墙约束在场景内，并给出明确的纵向滚动提示 */
+.customers {
+  position: relative;
+}
+
+.customers .industry-wall {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 162, 75, .55) rgba(92, 143, 192, .12);
+  scroll-snap-type: y proximity;
+  padding-bottom: 52px;
+}
+
+.customers .industry-group {
+  scroll-snap-align: start;
+  scroll-margin-top: 6px;
+}
+
+.customers .industry-wall::-webkit-scrollbar {
+  display: block;
+  width: 7px;
+  height: 7px;
+}
+
+.customers .industry-wall::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: rgba(201, 162, 75, .6);
+}
+
+.customers .industry-wall::-webkit-scrollbar-track {
+  background: rgba(92, 143, 192, .12);
+}
+
+@media (min-width: 1001px) {
+  .customers::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 282px;
+    z-index: 5;
+    height: 46px;
+    background: linear-gradient(180deg, transparent, rgba(3, 13, 24, .92));
+    content: "";
+    pointer-events: none;
+  }
+
+  .customers::before {
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
+    z-index: 6;
+    padding: 3px 8px;
+    border: 1px solid rgba(201, 162, 75, .38);
+    border-radius: 999px;
+    background: rgba(3, 13, 24, .78);
+    color: #e8ce8f;
+    content: "SCROLL ↕";
+    font: 9px var(--mono);
+    letter-spacing: 1.2px;
+    pointer-events: none;
+  }
+}
+
+@media (max-height: 850px) {
+  .customers.page-grid.single {
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .customers .section-intro {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    padding-right: 10px;
+  }
+
+  .customers .section-intro h2 {
+    margin-top: 6px;
+    font-size: 30px;
+    line-height: 1.16;
+  }
+
+  .customers .section-intro p {
+    margin: 8px 0;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .customers .customer-total {
+    margin-top: 10px;
+    font-size: 44px;
+  }
+
+  .customers .customer-segments article {
+    padding: 6px 8px;
+  }
+
+  .customers .customer-segments article > strong {
+    font-size: 18px;
+  }
+
+  .customers .customer-segments article > small {
+    font-size: 9px;
+  }
+
+  .customers .industry-wall {
+    height: 100%;
+    min-height: 0;
+  }
+}
+
+/* 04 数据资源：右侧明细头部按内容撑开，避免短屏下 ECOSYSTEM DETAIL 被面板上边缘裁切 */
+.sources-board .source-detail > header {
+  height: auto;
+  min-height: 58px;
+}
+
+@media (max-height: 850px) {
+  .sources-board .source-detail > header {
+    min-height: 50px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .sources-board .source-detail h3 {
+    margin-top: 4px;
+    font-size: 17px;
+    line-height: 1.25;
+  }
+
+  .sources-board .source-detail > header strong {
+    font-size: 32px;
+    line-height: 1;
+  }
+}
+
+/* 02 战略与模式：短屏下保留卡片的中英双语说明，避免英文行被 flex 压缩裁切 */
+@media (min-width: 1001px) and (max-height: 850px) {
+  .scene-progress-layer .products .subitem-card {
+    padding-top: 6px;
+    padding-bottom: 6px;
+  }
+
+  .scene-progress-layer .products .subitem-card > span {
+    font-size: 9px;
+    line-height: 1.1;
+  }
+
+  .scene-progress-layer .products .subitem-card > b {
+    margin-top: 2px;
+    line-height: 1.22;
+  }
+
+  .scene-progress-layer .products .subitem-card > small {
+    flex: 0 0 auto;
+    margin-top: 2px;
+    line-height: 1.2;
+  }
+
+  .scene-progress-layer .products .subitem-card > small x-en {
+    margin-top: 1px;
+    font-size: 8.2px;
+    line-height: 1.15;
+  }
+}
+
+/* 短屏紧凑版：720p 笔记本与普通浏览器窗口下保持六页内容完整可读 */
+@media (max-height: 760px) {
+  .scene-progress-layer .overview .authority-panel .panel-note {
+    display: none;
+  }
+
+  .scene-progress-layer .overview .authority-panel .panel-head {
+    min-height: 0;
+    margin-bottom: 4px;
+    padding-bottom: 4px;
+  }
+
+  .scene-progress-layer .overview .authority-panel .panel-head h2 {
+    font-size: 11px;
+    line-height: 1.2;
+  }
+
+  .scene-progress-layer .overview .authority-panel .panel-head h2 x-en {
+    font-size: 8px;
+    line-height: 1.2;
+  }
+
+  .scene-progress-layer .overview .authority-panel ol {
+    height: calc(100% - 40px);
+    gap: 3px;
+  }
+
+  .scene-progress-layer .overview .authority-panel li {
+    padding: 3px 7px;
+  }
+
+  .scene-progress-layer .overview .authority-panel li x-en {
+    font-size: 7.8px;
+    line-height: 1.15;
+  }
+
+  /* 双语模式下优先保证中文说明完整；切到 English 后仍显示完整英文说明 */
+  html[data-lang="both"] .scene-progress-layer .overview .fronts-panel .front-item > div > span x-en {
+    display: none;
+  }
+
+  .scene-progress-layer .overview .fronts-panel .front-list {
+    gap: 4px;
+  }
+
+  .scene-progress-layer .overview .fronts-panel .front-item {
+    padding: 4px 8px;
+  }
+
+  .scene-progress-layer .overview .fronts-panel .front-item b {
+    font-size: 12px;
+  }
+
+  .scene-progress-layer .network .province-row {
+    min-height: 26px;
+  }
+
+  .scene-progress-layer .sources-board .source-kpis {
+    grid-template-rows: repeat(3, 52px);
+  }
+
+  .scene-progress-layer .sources-board .source-kpis article {
+    min-height: 0;
+    height: 52px;
+  }
+
+  .scene-progress-layer .sources-board .source-kpis article strong {
+    font-size: 28px;
+  }
+
+  .scene-progress-layer .customers .customer-segments article {
+    padding: 4px 8px;
+  }
+
+  .scene-progress-layer .customers .customer-segments article > strong {
+    font-size: 16px;
+  }
+
+  .scene-progress-layer .customers .customer-segments article > small {
+    font-size: 8px;
+    line-height: 1.15;
+  }
+}
+
+/* 浏览器可视高度不足 720px 时保持 720 设计高度并允许纵向滚动，避免内容被硬裁切 */
+@media (max-height: 719px) {
+  html,
+  body,
+  #app {
+    height: auto !important;
+    min-height: 100%;
+    overflow: visible !important;
+  }
+
+  .app-shell,
+  .dashboard-shell {
+    height: 720px !important;
+    min-height: 720px !important;
+  }
+}
+
+/* 720p 仍保留 02 页卡片说明：用紧凑行高容纳中英两行，而不是隐藏 */
+@media (min-width: 1001px) and (max-height: 760px) {
+  .scene-progress-layer .products .subitem-card > small {
+    display: block;
+    flex: 0 0 auto;
+    overflow: hidden;
+    margin-top: 2px;
+    padding-top: 2px;
+    font-size: 9px;
+    line-height: 1;
+  }
+
+  .scene-progress-layer .products .subitem-card > small x-en {
+    margin-top: 1px;
+    font-size: 7.8px;
+    line-height: 1.05;
+  }
+}
