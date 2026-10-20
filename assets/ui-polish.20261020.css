@@ -1,0 +1,198 @@
+/* 蓝象智联驾驶舱 — 2026-10-20 UI polish
+   - 03 National network: show all 24 regions in a compact two-column ranking
+   - 04 Data resources: fit all 10 categories on shorter screens
+   - 06 Customer ecosystem: constrain the logo wall to the scene and make
+     its vertical scrolling explicit (fade + SCROLL hint + snap) */
+
+/* 03 全国节点规模：24 个区域全部展开，不再截断 */
+.network .province-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2px 6px;
+  overflow: visible;
+}
+
+.network .province-row {
+  grid-template-columns: 18px minmax(0, 1fr) 24px;
+  min-height: 36px;
+  padding: 0 5px;
+  gap: 4px;
+}
+
+.network .province-row > i {
+  display: none;
+}
+
+.network .province-row b {
+  font-size: 11px;
+  line-height: 1.15;
+}
+
+.network .province-row b x-en {
+  font-size: 9px;
+  line-height: 1.1;
+}
+
+.network .province-row strong {
+  font-size: 11px;
+}
+
+/* 短屏：两列排名进一步压缩，保证 24 个区域全部可见 */
+@media (max-height: 850px) {
+  .network .province-row {
+    min-height: 30px;
+  }
+}
+
+/* 04 数据资源：在 768/720 高度屏幕上完整显示 10 类 */
+@media (max-height: 850px) {
+  .sources-board .source-detail {
+    padding: 14px;
+  }
+
+  .sources-board .source-detail > header {
+    height: 50px;
+    min-height: 50px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .sources-board .source-detail-note {
+    margin-bottom: 8px;
+  }
+
+  .sources-board .source-detail-list article {
+    min-height: 37px;
+  }
+}
+
+@media (max-height: 760px) {
+  .network .province-row {
+    min-height: 28px;
+  }
+
+  .network .province-row b {
+    font-size: 10px;
+  }
+
+  .network .province-row b x-en {
+    font-size: 8px;
+  }
+
+  .network .province-row strong {
+    font-size: 10px;
+  }
+
+  .sources-board .source-detail-list article {
+    min-height: 35px;
+  }
+}
+
+/* 06 客户生态：把产业墙约束在场景内，并给出明确的纵向滚动提示 */
+.customers {
+  position: relative;
+}
+
+.customers .industry-wall {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(201, 162, 75, .55) rgba(92, 143, 192, .12);
+  scroll-snap-type: y proximity;
+  padding-bottom: 52px;
+}
+
+.customers .industry-group {
+  scroll-snap-align: start;
+  scroll-margin-top: 6px;
+}
+
+.customers .industry-wall::-webkit-scrollbar {
+  display: block;
+  width: 7px;
+  height: 7px;
+}
+
+.customers .industry-wall::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background: rgba(201, 162, 75, .6);
+}
+
+.customers .industry-wall::-webkit-scrollbar-track {
+  background: rgba(92, 143, 192, .12);
+}
+
+@media (min-width: 1001px) {
+  .customers::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 282px;
+    z-index: 5;
+    height: 46px;
+    background: linear-gradient(180deg, transparent, rgba(3, 13, 24, .92));
+    content: "";
+    pointer-events: none;
+  }
+
+  .customers::before {
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
+    z-index: 6;
+    padding: 3px 8px;
+    border: 1px solid rgba(201, 162, 75, .38);
+    border-radius: 999px;
+    background: rgba(3, 13, 24, .78);
+    color: #e8ce8f;
+    content: "SCROLL ↕";
+    font: 9px var(--mono);
+    letter-spacing: 1.2px;
+    pointer-events: none;
+  }
+}
+
+@media (max-height: 850px) {
+  .customers.page-grid.single {
+    grid-template-rows: minmax(0, 1fr);
+  }
+
+  .customers .section-intro {
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    padding-right: 10px;
+  }
+
+  .customers .section-intro h2 {
+    margin-top: 6px;
+    font-size: 30px;
+    line-height: 1.16;
+  }
+
+  .customers .section-intro p {
+    margin: 8px 0;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .customers .customer-total {
+    margin-top: 10px;
+    font-size: 44px;
+  }
+
+  .customers .customer-segments article {
+    padding: 6px 8px;
+  }
+
+  .customers .customer-segments article > strong {
+    font-size: 18px;
+  }
+
+  .customers .customer-segments article > small {
+    font-size: 9px;
+  }
+
+  .customers .industry-wall {
+    height: 100%;
+    min-height: 0;
+  }
+}
